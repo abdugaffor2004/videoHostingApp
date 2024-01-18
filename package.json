@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@prisma/client": "^5.8.0",
+    "axios": "^1.6.5",
     "busboy": "^1.6.0",
     "next": "14.0.4",
     "react": "^18",
