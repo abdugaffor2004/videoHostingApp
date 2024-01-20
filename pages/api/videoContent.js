@@ -10,10 +10,11 @@ export default async function handler(req, res){
     }
 
     if(method === "POST"){
-        const {title, description} = req.body
+        const {title, description, id} = req.body
 
         const result = await prisma.video.create({
             data:{
+                id,
                 title,
                 description
             }

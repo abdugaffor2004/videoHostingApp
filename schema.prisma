@@ -10,7 +10,7 @@ datasource db {
 
 
 model Video {
-  id        String     @default(cuid()) @id
+  id        String     @id
   title     String
   description   String?
   createdAt     DateTime  @default(now()) @map(name: "created_at")

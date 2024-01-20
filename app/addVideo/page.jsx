@@ -9,24 +9,31 @@ export default function addVideo(){
 
     const [title, setTitle] = useState()
     const [description, setDescription] = useState()
+    const [fileName, setFileName] = useState()
     const [file, setFile] = useState()
+    
     const dispatch = useDispatch()
     
     
 
     async function handleSubmit(e){
         e.preventDefault()
-        const data = new FormData()
-    
+        const VideoFile = new FormData()
+        
+        
         if(!file){
             return
         }
-        
-        data.append('file', file)
-    
+
+        VideoFile.append('file', file)      
+
         try{
-            await axios.post('/api/videos', data)
-            dispatch(uploadVideosDataAsync({title, description}))
+            await axios.post('/api/videos', VideoFile).then( response =>{
+                const {id} = response.data 
+                dispatch(uploadVideosDataAsync({title, description, id}))
+            } ) // синхронизирую id из backend(videos) и базы данных)))))
+
+            
             setTitle('')
             setDescription('')
         }
@@ -42,6 +49,8 @@ export default function addVideo(){
         if(files?.length){
             setFile(files[0])
         }
+
+        setFileName(files[0].name)
         
     }
 
@@ -49,7 +58,7 @@ export default function addVideo(){
 
     return(
         <div className="flex flex-column justify-center mt-20">
-            <form className="border border-white px-16 pt-10 rounded" action="POST">
+            <form className="border border-white px-16 pt-10 rounded" >
                 <div>
                     <div>
                         <label htmlFor="video-title" className="block text-sm font-medium leading-6"> Название </label>

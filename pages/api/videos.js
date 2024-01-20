@@ -1,5 +1,6 @@
 import busboy from "busboy"
 import fs from "fs"
+import { v4 as uuidv4 } from 'uuid';
 
 const CHUNK_SIZE_IN_BYTES = 2000000
 
@@ -10,14 +11,11 @@ export const config={
 }
 
 function uploadVideoStream(req, res){
-
+    const id = uuidv4()
     const bb = busboy({headers: req.headers})
 
     bb.on('file', (_, file, info) =>{
-        const fileName = info.filename
-        const filePath = `./videos/${fileName}`
-        
-
+        const filePath = `./videos/${id}.mp4`
         const stream = fs.createWriteStream(filePath)
 
         file.pipe(stream)
@@ -29,7 +27,7 @@ function uploadVideoStream(req, res){
     })
 
     req.pipe(bb)
-    return res.status(200);
+    return res.status(200).json({id});
 }
 
 function getVideoStream(req, res){
@@ -78,6 +76,7 @@ export default async function handler(req, res){
     }
 
     if(method === "POST"){
+        console.log(req)
         return uploadVideoStream(req, res)
     }
 
