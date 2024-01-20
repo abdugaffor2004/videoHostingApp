@@ -1,17 +1,8 @@
 'use client'
 import axios from "axios"
 import { useState } from "react"
-
-// async function hello(){
-//     const res = await fetch(`${process.env.BASE_URL}/api/hello`)
-//     if(!res.ok){
-//         console.log(res)
-//     }
-//     return res.json()
-// }
-
-
-
+import { useDispatch } from "react-redux"
+import { uploadVideosDataAsync } from "../../redux/slices/videoSlice"
 
 
 export default function addVideo(){
@@ -19,8 +10,9 @@ export default function addVideo(){
     const [title, setTitle] = useState()
     const [description, setDescription] = useState()
     const [file, setFile] = useState()
+    const dispatch = useDispatch()
     
-
+    
 
     async function handleSubmit(e){
         e.preventDefault()
@@ -34,9 +26,12 @@ export default function addVideo(){
     
         try{
             await axios.post('/api/videos', data)
+            dispatch(uploadVideosDataAsync({title, description}))
+            setTitle('')
+            setDescription('')
         }
         catch(e){
-            console.log(e)
+            console.error(e)
         }
         
     }
@@ -61,10 +56,10 @@ export default function addVideo(){
                         <div className="mt-2 ">
                             <input
                             onChange={(e) => setTitle(e.target.value)}
+                            value={title || ''}
                             id="video-title"
                             name="video-title"
                             className="block w-80 outline-none flex-1 border bg-transparent py-1.5 pl-2  placeholder:text-gray-400 rounded  sm:text-sm sm:leading-6"
-                            defaultValue={''}
                             />
                         </div>
                     </div>
@@ -74,10 +69,10 @@ export default function addVideo(){
                         <div className="mt-2 ">
                             <input
                             onChange={(e) => setDescription(e.target.value)}
+                            value={description || ''}
                             id="video-description"
                             name="video-description"
                             className="block w-80 outline-none flex-1 border bg-transparent py-1.5 pl-2  placeholder:text-gray-400 rounded  sm:text-sm sm:leading-6"
-                            defaultValue={''}
                             />
                         </div>
                     </div>

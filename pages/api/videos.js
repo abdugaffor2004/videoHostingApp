@@ -10,9 +10,6 @@ export const config={
 }
 
 function uploadVideoStream(req, res){
-    
-    const reqBody = JSON.stringify(req.body);
-    console.log(reqBody) 
 
     const bb = busboy({headers: req.headers})
 
@@ -32,7 +29,7 @@ function uploadVideoStream(req, res){
     })
 
     req.pipe(bb)
-    return;
+    return res.status(200);
 }
 
 function getVideoStream(req, res){
@@ -86,9 +83,4 @@ export default async function handler(req, res){
 
     return res.status(405).json({error: `Method ${method} is not alllowed`})
 
-
-    // if(req.method === 'GET'){
-    //     const data = await prisma.video.findMany()
-    //     return res.status(200).json(data)
-    // }
 }
