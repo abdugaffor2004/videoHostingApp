@@ -11,12 +11,13 @@ export default function addVideo(){
     const [description, setDescription] = useState()
     const [fileName, setFileName] = useState()
     const [file, setFile] = useState()
+    const [buttonDisabled, setButtonDisabled] = useState(false)
     
     const dispatch = useDispatch()
     
     
 
-    async function handleSubmit(e){
+    function handleSubmit(e){
         e.preventDefault()
         const VideoFile = new FormData()
         
@@ -28,14 +29,16 @@ export default function addVideo(){
         VideoFile.append('file', file)      
 
         try{
-            await axios.post('/api/videos', VideoFile).then( response =>{
+            setButtonDisabled(true)
+            axios.post('/api/videos', VideoFile).then( response =>{
                 const {id} = response.data 
                 dispatch(uploadVideosDataAsync({title, description, id}))
+                setTitle('')
+                setDescription('')
+                setButtonDisabled(false)
             } ) // синхронизирую id из backend(videos) и базы данных)))))
+                // здесь специально использую синхронный код
 
-            
-            setTitle('')
-            setDescription('')
         }
         catch(e){
             console.error(e)
@@ -64,6 +67,7 @@ export default function addVideo(){
                         <label htmlFor="video-title" className="block text-sm font-medium leading-6"> Название </label>
                         <div className="mt-2 ">
                             <input
+                            required
                             onChange={(e) => setTitle(e.target.value)}
                             value={title || ''}
                             id="video-title"
@@ -76,12 +80,14 @@ export default function addVideo(){
                     <div className="mt-8">
                         <label htmlFor="video-description" className="block text-sm font-medium leading-6"> Описание </label>
                         <div className="mt-2 ">
-                            <input
+                            <textarea
+                            rows={5}
+                            required
                             onChange={(e) => setDescription(e.target.value)}
                             value={description || ''}
                             id="video-description"
                             name="video-description"
-                            className="block w-80 outline-none flex-1 border bg-transparent py-1.5 pl-2  placeholder:text-gray-400 rounded  sm:text-sm sm:leading-6"
+                            className="default:border-white invalid:border-red-500 valid:border-green-500  block w-80 outline-none flex-1 border bg-transparent py-1.5 pl-2  placeholder:text-gray-400 rounded  sm:text-sm sm:leading-6"
                             />
                         </div>
                     </div>
@@ -96,16 +102,17 @@ export default function addVideo(){
 
                     <div className="mt-8">
                         <div className="mt-2">
-                        <input onClick={e => (e.target.value = null)} onChange={handleSetFile} type="file" accept=".mp4" className="block w-full text-sm text-white
+                        <input required  onClick={e => (e.target.value = null)} onChange={handleSetFile} type="file" accept=".mp4" className="block w-full text-sm text-white
                             file:mr-4 file:py-2 file:px-4
                             file:rounded-full file:border-0
                             file:text-sm file:font-semibold
                             file:bg-violet-50 file:text-black
                             hover:file:bg-violet-100
+                            
                         "/>
                         </div>
                     </div>
-                    <div className="flex justify-center mt-14 mb-8"> <button onClick={handleSubmit} className="bg-teal-500 text-black py-2 px-10 rounded hover:opacity-75"> Добавить </button> </div>
+                    <div className="flex justify-center mt-14 mb-8"> <button disabled={buttonDisabled} type="submit" onClick={handleSubmit} className="disabled:opacity-50  bg-teal-500 text-black py-2 px-10 rounded hover:opacity-75"> Добавить </button> </div>
                 </div>
             </form>
         </div>

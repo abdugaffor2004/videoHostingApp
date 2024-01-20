@@ -1,23 +1,21 @@
-export default function VideCard(){
+import Link from "next/link";
+
+function VideoCard({filePath}){
 
     return(
-        <div className={s.videoWrapper}>
+        <div >
             <div>
-                <video  style={{borderRadius:'20px'}}
-                        src={`/api/videos/?videoId=${id}`}
-                        width='1150px'
-                        height= 'auto'
-                        controls
-                        // autoPlay
-                        />
+                <Link href={`/${filePath}`}>
 
-                <h1 className={s.videoTitle}>Gladiator film</h1>
-                <p className={s.videoDescription}> 
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo nulla esse temporibus. Iure voluptas tenetur suscipit quasi. Deleniti quidem nisi sapiente, neque culpa est quia ducimus aspernatur laboriosam. Fugiat, architecto?
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quaerat hic molestiae consequuntur error tempora enim est labore quidem nam laudantium, voluptas reiciendis aliquam perspiciatis sint voluptatibus minus. Adipisci, consectetur reprehenderit!
-                </p>
+                    <video preload="metadata" style={{borderRadius:'20px', marginBottom:'40px'}} width='400px' height= 'auto' >
+                        <source src={`/api/videos/?videoId=${filePath}#t=1000`}/>
+                    </video>
+
+                </Link>
             </div>
             
         </div>
     )
 } 
+
+export default VideoCard

@@ -1,25 +1,36 @@
-import s from './videoSection.module.css'
+'use client'
 
-export default function VideoSection({id}){
+
+
+export default function VideoSection({id, sortedVideoList}){
+
+    let title
+    let description
+    
+    sortedVideoList.map( item => {
+        title = item.title
+        description = item.description
+
+    } )
 
     return(
-        <div className={s.videoWrapper}>
-            <div>
-                <video  style={{borderRadius:'20px'}}
+        
+        <div className="mt-16 max-w-full px-10">
+            <div className="flex flex-col items-center">
+                <video  className="rounded-3xl "
                         src={`/api/videos/?videoId=${id}`}
-                        width='1150px'
-                        height= 'auto'
+                        width={950}
                         controls
                         // autoPlay
-                        />
+                />
 
-                <h1 className={s.videoTitle}>Gladiator film</h1>
-                <p className={s.videoDescription}> 
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo nulla esse temporibus. Iure voluptas tenetur suscipit quasi. Deleniti quidem nisi sapiente, neque culpa est quia ducimus aspernatur laboriosam. Fugiat, architecto?
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quaerat hic molestiae consequuntur error tempora enim est labore quidem nam laudantium, voluptas reiciendis aliquam perspiciatis sint voluptatibus minus. Adipisci, consectetur reprehenderit!
-                </p>
+                <div className="mb-8 max-w-4xl">
+                    <h1 className="my-4 text-3xl">{title}</h1>
+                    <p className=''> {description} </p>
+                </div>
             </div>
-            
         </div>
+            
+        
     )
 } 

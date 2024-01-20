@@ -6,7 +6,7 @@ export default function Header(){
     return(
         <>
             <header>
-                <nav className="py-10 flex justify-evenly border-b border-white">
+                <nav className="py-6 flex justify-evenly border-b border-white">
                     {/* <Link className="bg-teal-500 text-black py-1 px-3 rounded hover:opacity-75" href={'/'}>Главная</Link>
                     <Link className="bg-teal-500 text-black py-1 px-3 rounded hover:opacity-75" href={'/addVideo'}>Добавить</Link>
                     <Link className="bg-teal-500 text-black py-1 px-3 rounded hover:opacity-75" href={'/Tags'}>Теги</Link> */}

@@ -14,7 +14,7 @@ export default function CustomButton({Component, content, fontColor, source, typ
 
     return(
         <>
-            <Component type="type" href={source} className={`bg-teal-500 text-${fontColor} py-1 px-3 rounded hover:opacity-75`}>{content}</Component>
+            <Component type="type" href={source} className={`bg-teal-500 text-${fontColor} py-1 px-2 rounded hover:opacity-75`}>{content}</Component>
         </>
     )
 }
