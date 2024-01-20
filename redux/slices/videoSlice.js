@@ -30,7 +30,7 @@ export const counterSlice = createSlice({
 export const getVideosDataAsync = createAsyncThunk(
     "counter/getVideoDataAsync",
     async () =>{
-        let {data} = await axios.get(`http://localhost:3000/api/videoContent`)
+        let {data} = await axios.get(`https://video-hosting-app-virid.vercel.app/api/videoContent`)
         console.log(data)
         return data
     }
@@ -40,7 +40,7 @@ export const getVideosDataAsync = createAsyncThunk(
 export const uploadVideosDataAsync = createAsyncThunk(
     "counter/uploadVideoDataAsync",
     async (videoData) =>{
-        await axios.post(`http://localhost:3000/api/videoContent`, videoData)
+        await axios.post(`https://video-hosting-app-virid.vercel.app/api/videoContent`, videoData)
     }
 )
 
