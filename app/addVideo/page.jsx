@@ -1,8 +1,10 @@
 'use client'
 import axios from "axios"
-import { useState } from "react"
-import { useDispatch } from "react-redux"
+import { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import { uploadVideosDataAsync } from "../../redux/slices/videoSlice"
+import Link from "next/link"
+import { getTagsDataAsync } from "../../redux/slices/tagsSlice"
 
 
 export default function addVideo(){
@@ -12,8 +14,15 @@ export default function addVideo(){
     const [fileName, setFileName] = useState()
     const [file, setFile] = useState()
     const [buttonDisabled, setButtonDisabled] = useState(false)
+    const [modalVisibility, setModalVisibility] = useState(true)
+
+    const tags = useSelector( state => state.tags.tags )
     
     const dispatch = useDispatch()
+
+    useEffect( () =>{
+        dispatch(getTagsDataAsync())
+    }, [] )
     
     
 
@@ -57,6 +66,10 @@ export default function addVideo(){
         
     }
 
+    function toggleModalVisibility(){
+        modalVisibility === true ? setModalVisibility(false) : setModalVisibility(true)
+    }
+
 
 
     return(
@@ -81,22 +94,44 @@ export default function addVideo(){
                         <label htmlFor="video-description" className="block text-sm font-medium leading-6"> Описание </label>
                         <div className="mt-2 ">
                             <textarea
-                            rows={5}
-                            required
-                            onChange={(e) => setDescription(e.target.value)}
-                            value={description || ''}
-                            id="video-description"
-                            name="video-description"
-                            className="default:border-white invalid:border-red-500 valid:border-green-500  block w-80 outline-none flex-1 border bg-transparent py-1.5 pl-2  placeholder:text-gray-400 rounded  sm:text-sm sm:leading-6"
+                                rows={5}
+                                required
+                                onChange={(e) => setDescription(e.target.value)}
+                                value={description || ''}
+                                id="video-description"
+                                name="video-description"
+                                className="default:border-white invalid:border-red-500 valid:border-green-500  block w-80 outline-none flex-1 border bg-transparent py-1.5 pl-2  placeholder:text-gray-400 rounded  sm:text-sm sm:leading-6"
                             />
                         </div>
                     </div>
 
                     <div className="mt-8">
                         <div className="mt-2">
-                            <span className="mr-5 border border-teal-500 text-white py-1.5 px-3 text-sm rounded cursor-pointer hover:opacity-75">Tag</span>
-                            <span className="mr-5 border border-teal-500 text-white py-1.5 px-3 text-sm rounded cursor-pointer hover:opacity-75">kfsdlff</span>
+
+                        <button onClick={toggleModalVisibility} id="dropdownUsersButton" data-dropdown-toggle="dropdownUsers" data-dropdown-placement="bottom" className="text-black  bg-teal-500 hover:bg-blue-800 focus:outline-none focus:ring-teal-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center  dark:hover:bg-teal-700 dark:focus:ring-blue-800" type="button"> 
+                            Project users 
+                            <svg className="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                            </svg>
+                        </button>
+
+                        <div id="dropdownUsers" hidden={modalVisibility} className="z-10 mt-6  bg-white rounded-lg shadow w-60 dark:bg-gray-700">
+
+                            <ul className="h-48 py-2 overflow-y-auto text-gray-700 dark:text-gray-200" aria-labelledby="dropdownUsersButton">
+                                {tags.map( (tag) => (
+                                    <li>
+                                        <a href="#" className="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                            {tag.name}
+                                        </a>
+                                    </li>
+                                ) )}
+                            </ul>
                             
+                            <Link href="/tags" className="flex items-center p-3 text-sm font-medium text-blue-600 border-t border-gray-200 rounded-b-lg bg-gray-50 dark:border-gray-600 hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-blue-500 hover:underline">
+                                Add new tag
+                            </Link>
+                        </div>
+
                         </div>
                     </div>
 
@@ -108,7 +143,6 @@ export default function addVideo(){
                             file:text-sm file:font-semibold
                             file:bg-violet-50 file:text-black
                             hover:file:bg-violet-100
-                            
                         "/>
                         </div>
                     </div>

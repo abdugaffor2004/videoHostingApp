@@ -2,19 +2,15 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 const initialState = {
-  videosUrlList:[],
-  videos: []
+  videos: [],
 }
 
-export const counterSlice = createSlice({
+export const videoSlice = createSlice({
   name: 'videos',
   initialState,
   reducers: {
     setVideosData: (state, action) => {
       state.videos = [...action.payload]
-    },
-    setVideosUrl: (state, action) => {
-        state.videosUrlList = [...action.payload]
     },
   },
 
@@ -28,9 +24,9 @@ export const counterSlice = createSlice({
 })
 
 export const getVideosDataAsync = createAsyncThunk(
-    "counter/getVideoDataAsync",
+    "videos/getVideoDataAsync",
     async () =>{
-        let {data} = await axios.get(`https://video-hosting-app-virid.vercel.app/api/videoContent`)
+        let {data} = await axios.get(`${process.env.BASE_URL}/api/videoContent`)
         console.log(data)
         return data
     }
@@ -38,13 +34,13 @@ export const getVideosDataAsync = createAsyncThunk(
 
 
 export const uploadVideosDataAsync = createAsyncThunk(
-    "counter/uploadVideoDataAsync",
+    "videos/uploadVideoDataAsync",
     async (videoData) =>{
-        await axios.post(`https://video-hosting-app-virid.vercel.app/api/videoContent`, videoData)
+        await axios.post(`${process.env.BASE_URL}/api/videoContent`, videoData)
     }
 )
 
 // Action creators are generated for each case reducer function
-export const { setVideosData, incrementByAmount } = counterSlice.actions
+export const { setVideosData, incrementByAmount } = videoSlice.actions
 
-export default counterSlice.reducer
+export default videoSlice.reducer

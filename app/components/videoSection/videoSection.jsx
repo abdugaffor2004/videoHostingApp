@@ -21,7 +21,7 @@ export default function VideoSection({id, sortedVideoList}){
                         src={`/api/videos/?videoId=${id}`}
                         width={950}
                         controls
-                        // autoPlay
+                        autoPlay
                 />
 
                 <div className="mb-8 max-w-4xl">
