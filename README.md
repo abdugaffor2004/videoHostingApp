@@ -2,7 +2,19 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+First, install all dependencies:
+
+```bash
+npm install
+# or
+yarn add
+# or
+pnpm install
+# or
+bun install
+```
+
+Second, run the development server:
 
 ```bash
 npm run dev
@@ -15,6 +27,17 @@ bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+
+
+To check the Database data flow run (DB dumping):
+
+```bash
+npx prisma studio
+```
+It will start local version of your Database within GUI, where you can manipulate and seek for data flows.
+
+
 
 You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 

@@ -28,12 +28,12 @@ export default function addVideo(){
     
 
     function handleSubmit(e){
-        e.preventDefault()
+        // e.preventDefault()
         const VideoFile = new FormData()
         
         
-        if(!file){
-            return
+        if(!file || !title || !description){
+            return 
         }
 
         VideoFile.append('file', file)      
@@ -115,7 +115,7 @@ export default function addVideo(){
                                 value={description || ''}
                                 id="video-description"
                                 name="video-description"
-                                className="default:border-white invalid:border-red-500 valid:border-green-500  block w-80 outline-none flex-1 border bg-transparent py-1.5 pl-2  placeholder:text-gray-400 rounded  sm:text-sm sm:leading-6"
+                                className="default:border-white  block w-80 outline-none flex-1 border bg-transparent py-1.5 pl-2  placeholder:text-gray-400 rounded  sm:text-sm sm:leading-6"
                             />
                         </div>
                     </div>
