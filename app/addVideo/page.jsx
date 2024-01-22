@@ -2,7 +2,7 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { uploadVideosDataAsync } from "../../redux/slices/videoSlice"
+import { getVideosDataAsync, uploadVideosDataAsync } from "../../redux/slices/videoSlice"
 import Link from "next/link"
 import { getTagsDataAsync } from "../../redux/slices/tagsSlice"
 
@@ -15,6 +15,7 @@ export default function addVideo(){
     const [file, setFile] = useState()
     const [buttonDisabled, setButtonDisabled] = useState(false)
     const [modalVisibility, setModalVisibility] = useState(true)
+    let  [selectedTags, setSelectedTags] = useState([])
 
     const tags = useSelector( state => state.tags.tags )
     
@@ -41,7 +42,7 @@ export default function addVideo(){
             setButtonDisabled(true)
             axios.post('/api/videos', VideoFile).then( response =>{
                 const {id} = response.data 
-                dispatch(uploadVideosDataAsync({title, description, id}))
+                dispatch(uploadVideosDataAsync({title, description, id, selectedTags: selectedTags.flat() }))
                 setTitle('')
                 setDescription('')
                 setButtonDisabled(false)
@@ -70,7 +71,21 @@ export default function addVideo(){
         modalVisibility === true ? setModalVisibility(false) : setModalVisibility(true)
     }
 
+    function handleSelectedTags(tag){
 
+        let customTag = {
+            id: tag.id,
+            name: tag.name,
+        } // создаю кастомный объект без поля videos[] так как мето connect в prisma client ругается на это
+         // {id: 'clrni8lv70000110f0nvcnn70', name: 'Япония'} должен быть вот такой вид именно с id-шником иначе connect не сработает
+         // А используем мы connect чтобы связать уже ранее созданный тэг с видео. Это все есть в videoContent.js  
+
+        selectedTags.includes(tag) ? null : selectedTags.push([customTag])        
+        console.log(selectedTags.flat())// Преврящаем многомерный массив в одномерный
+        setModalVisibility(true)
+    }
+
+    
 
     return(
         <div className="flex flex-column justify-center mt-20">
@@ -108,10 +123,10 @@ export default function addVideo(){
                     <div className="mt-8">
                         <div className="mt-2">
 
-                        <button onClick={toggleModalVisibility} id="dropdownUsersButton" data-dropdown-toggle="dropdownUsers" data-dropdown-placement="bottom" className="text-black  bg-teal-500 hover:bg-blue-800 focus:outline-none focus:ring-teal-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center  dark:hover:bg-teal-700 dark:focus:ring-blue-800" type="button"> 
-                            Project users 
-                            <svg className="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                        <button onClick={toggleModalVisibility} id="dropdownUsersButton" data-dropdown-toggle="dropdownUsers" data-dropdown-placement="bottom" className="text-black text-xs bg-teal-500 hover:bg-blue-800 focus:outline-none focus:ring-teal-300 font-medium rounded-lg text-sm px-2 py-2 text-center inline-flex items-center  dark:hover:bg-teal-700 dark:focus:ring-blue-800" type="button"> 
+                            Теги
+                            <svg className="w-2.5 h-2.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4"/>
                             </svg>
                         </button>
 
@@ -119,10 +134,10 @@ export default function addVideo(){
 
                             <ul className="h-48 py-2 overflow-y-auto text-gray-700 dark:text-gray-200" aria-labelledby="dropdownUsersButton">
                                 {tags.map( (tag) => (
-                                    <li>
-                                        <a href="#" className="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                    <li key={tag.id}>
+                                        <span onClick={() => handleSelectedTags(tag)} className="flex items-center cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                             {tag.name}
-                                        </a>
+                                        </span>
                                     </li>
                                 ) )}
                             </ul>
@@ -134,6 +149,10 @@ export default function addVideo(){
 
                         </div>
                     </div>
+                    <div className="mt-8 w-fit grid grid-cols-2 gap-2">
+                        {selectedTags.flat().map( (tag) => <Link href={`/tags/${tag.id}`} className="mr-5 border border-teal-500 text-white py-1.5 px-3 text-sm rounded cursor-pointer hover:opacity-75">{tag.name}</Link> )}
+                    </div>
+
 
                     <div className="mt-8">
                         <div className="mt-2">

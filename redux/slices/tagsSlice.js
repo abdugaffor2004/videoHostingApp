@@ -33,6 +33,13 @@ export const getTagsDataAsync = createAsyncThunk(
     }
 )
 
+export const uploadTagsDataAsync = createAsyncThunk(
+  "tags/uploadTagsDataAsync",
+  async (tagData) =>{
+      await axios.post(`${process.env.BASE_URL}/api/tags`, tagData)
+  }
+)
+
 
 
 // Action creators are generated for each case reducer function

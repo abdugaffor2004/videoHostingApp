@@ -2,7 +2,7 @@ import busboy from "busboy"
 import fs from "fs"
 import { v4 as uuidv4 } from 'uuid';
 
-const CHUNK_SIZE_IN_BYTES = 2000000
+const CHUNK_SIZE_IN_BYTES = 100000000
 
 export const config={
     api:{

@@ -27,7 +27,6 @@ export const getVideosDataAsync = createAsyncThunk(
     "videos/getVideoDataAsync",
     async () =>{
         let {data} = await axios.get(`${process.env.BASE_URL}/api/videoContent`)
-        console.log(data)
         return data
     }
 )

@@ -1,6 +1,6 @@
 'use client'
 import { useEffect } from "react";
-import VideoSection from "../../app/components/videoSection/videoSection";
+import VideoSection from "../components/videoSection";
 import { useDispatch, useSelector } from "react-redux";
 import { getVideosDataAsync } from "../../redux/slices/videoSlice";
 
@@ -11,7 +11,7 @@ function VideoPage({params}){
     const dispatch = useDispatch()
 
     useEffect( () =>{
-    dispatch(getVideosDataAsync())
+        dispatch(getVideosDataAsync())
     }, [] )
 
     
@@ -19,6 +19,7 @@ function VideoPage({params}){
 
     const videoList = useSelector( (state) => state.videos.videos )
     const sortedVideoList = videoList.filter( (video) => video.id === params.videoId )
+    console.log(sortedVideoList)
 
     return(
         

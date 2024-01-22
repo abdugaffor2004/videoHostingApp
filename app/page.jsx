@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getVideosDataAsync} from '../redux/slices/videoSlice'
 import { useEffect } from 'react'
 import VideoCard from './components/videoCard'
-import { getTagsDataAsync } from '../redux/slices/tagsSlice'
 
 
 export default function Home() {
@@ -14,7 +13,6 @@ export default function Home() {
 
   useEffect( () =>{
     dispatch(getVideosDataAsync())
-    dispatch(getTagsDataAsync())
   }, [] )
 
   

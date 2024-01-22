@@ -5,18 +5,28 @@ export default async function handler(req, res){
     const method = req.method
 
     if(method === "GET"){
-        const data = await prisma.video.findMany()
+        const data = await prisma.video.findMany({
+            include:{
+                tags:{
+                    select: {id: true, name:true }
+                }
+            }
+        })
         res.status(200).json(data)
     }
 
     if(method === "POST"){
-        const {title, description, id} = req.body
+        const {title, description, id, selectedTags} = req.body
 
         const result = await prisma.video.create({
             data:{
                 id,
                 title,
-                description
+                description,
+                tags: {
+                    connect: selectedTags,
+                }, // https://www.prisma.io/docs/orm/prisma-client/queries/relation-queries
+                  // Здесь можно прочитать про connect и другие методы управления БД
             }
         })
 
