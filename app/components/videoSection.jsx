@@ -6,12 +6,14 @@ import Link from "next/link"
 
 export default function VideoSection({id, sortedVideoList}){
 
+    let videoUrl
     let title
     let description
     let tags = []
     
     
     sortedVideoList.map( item => {
+        videoUrl = item.url
         title = item.title
         description = item.description
         tags = item.tags
@@ -23,7 +25,7 @@ export default function VideoSection({id, sortedVideoList}){
         <div className="mt-16 max-w-full px-10">
             <div className="flex flex-col items-center">
                 <video  className="rounded-3xl"
-                        src={`/api/videos/?videoId=${id}`}
+                        src={`${videoUrl}`}
                         width={950}
                         controls
                         autoPlay

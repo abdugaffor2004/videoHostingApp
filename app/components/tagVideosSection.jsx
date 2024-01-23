@@ -18,13 +18,13 @@ function TagVideosSection({selectedTag}){
         videos = [...property.videos]
     } )
 
-
+    console.log(videos)
     return(
         
         <div>
             <h1 className="text-4xl text-center mt-10">{name}</h1>
             <div className="mt-16 px-10 flex justify-around flex-wrap gap-x-5 gap-y-14">
-                {videos.map( (video) => <VideoCard key={video.id} filePath={video.id}/> )}
+                {videos.map( (video) => <VideoCard key={video.id} filePath={video.url}/> )}
             </div>
         </div>
         

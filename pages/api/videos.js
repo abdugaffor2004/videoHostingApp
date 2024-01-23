@@ -85,15 +85,14 @@
 // }
 
 
-
+// Переделал костяк проекта использовав за хранилище видео файлов vercel-blob
+// Подробнее https://vercel.com/docs/storage/vercel-blob. Выбрал Client-side Upload так как у Server-side есть ограничение в размере запроса(4.5mb)
 import { handleUpload } from '@vercel/blob/client';
-import { blob } from 'stream/consumers';
 
 
 async function uploadVideo(req, res){
     const body = await req.body;
-    let blobCont;
-    let tokenPayloadCont;
+    console.log(body)
  
  
     const jsonResponse = await handleUpload({
@@ -111,7 +110,7 @@ async function uploadVideo(req, res){
         // Use ngrok or similar to get the full upload flow
  
         try {
-        console.log('blob upload completed', blob, tokenPayload);
+        // console.log('blob upload completed', blob, tokenPayload);
           // Run any logic after the file upload completed
           // const { userId } = JSON.parse(tokenPayload);
           // await db.update({ avatar: blob.url, userId });
@@ -130,9 +129,6 @@ async function uploadVideo(req, res){
 export default async function handler(req, res){
     const method = req.method
 
-    // if(method === "GET"){
-    //     return getVideoStream(req, res)
-    // }
 
     if(method === "POST"){
         return uploadVideo(req, res);

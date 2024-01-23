@@ -15,11 +15,11 @@ export default function Home() {
     dispatch(getVideosDataAsync())
   }, [] )
 
-  
+  console.log(videoList)
 
   return (
     <main className="mt-24 px-10 flex justify-around flex-wrap gap-x-5 gap-y-14">
-      {videoList.map( (video) => <VideoCard key={video.id} filePath={video.id}/> )}
+      {videoList.map( (video) => <VideoCard key={video.id} id={video.id} filePath={video.url}/> )}
     </main>
   )
 }
