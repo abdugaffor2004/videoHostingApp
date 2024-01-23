@@ -42,6 +42,7 @@ export const uploadTagsDataAsync = createAsyncThunk(
 
 
 
+
 // Action creators are generated for each case reducer function
 export const { setTagsData } = tagsSlice.actions
 
