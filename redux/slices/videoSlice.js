@@ -26,7 +26,7 @@ export const videoSlice = createSlice({
 export const getVideosDataAsync = createAsyncThunk(
     "videos/getVideoDataAsync",
     async () =>{
-        let {data} = await axios.get(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/videoContent`)
+        let {data} = await axios.get(`${process.env.BASE_URL}/api/videoContent`)
         return data
     }
 )
@@ -35,7 +35,7 @@ export const getVideosDataAsync = createAsyncThunk(
 export const uploadVideosDataAsync = createAsyncThunk(
     "videos/uploadVideoDataAsync",
     async (videoData) =>{
-        await axios.post(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/videoContent`, videoData)
+        await axios.post(`${process.env.BASE_URL}/api/videoContent`, videoData)
     }
 )
 
