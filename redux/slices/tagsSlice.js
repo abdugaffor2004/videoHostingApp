@@ -36,7 +36,7 @@ export const getTagsDataAsync = createAsyncThunk(
 export const uploadTagsDataAsync = createAsyncThunk(
   "tags/uploadTagsDataAsync",
   async (tagData) =>{
-      await axios.post(`${process.env.VERCEL_URL}}/api/tags`, tagData)
+      await axios.post(`${process.env.VERCEL_URL}/api/tags`, tagData)
   }
 )
 
