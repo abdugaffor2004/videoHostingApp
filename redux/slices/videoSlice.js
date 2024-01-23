@@ -26,7 +26,7 @@ export const videoSlice = createSlice({
 export const getVideosDataAsync = createAsyncThunk(
     "videos/getVideoDataAsync",
     async () =>{
-        let {data} = await axios.get(`${process.env.VERCEL_URL}/api/videoContent`)
+        let {data} = await axios.get(`https://video-hosting-app-virid.vercel.app/api/videoContent`)
         return data
     }
 )
@@ -35,7 +35,7 @@ export const getVideosDataAsync = createAsyncThunk(
 export const uploadVideosDataAsync = createAsyncThunk(
     "videos/uploadVideoDataAsync",
     async (videoData) =>{
-        await axios.post(`${process.env.VERCEL_URL}/api/videoContent`, videoData)
+        await axios.post(`https://video-hosting-app-virid.vercel.app/api/videoContent`, videoData)
     }
 )
 
