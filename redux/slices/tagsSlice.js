@@ -27,7 +27,7 @@ export const tagsSlice = createSlice({
 export const getTagsDataAsync = createAsyncThunk(
     "tags/getTagsDataAsync",
     async () =>{
-        let {data} = await axios.get(`https://video-hosting-app-virid.vercel.app/api/tags`)
+        let {data} = await axios.get(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/tags`)
         console.log(data)
         return data
     }
@@ -36,7 +36,7 @@ export const getTagsDataAsync = createAsyncThunk(
 export const uploadTagsDataAsync = createAsyncThunk(
   "tags/uploadTagsDataAsync",
   async (tagData) =>{
-      await axios.post(`https://video-hosting-app-virid.vercel.app/api/tags`, tagData)
+      await axios.post(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/tags`, tagData)
   }
 )
 
