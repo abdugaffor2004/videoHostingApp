@@ -88,10 +88,11 @@
 // Переделал костяк проекта использовав за хранилище видео файлов vercel-blob
 // Подробнее https://vercel.com/docs/storage/vercel-blob. Выбрал Client-side Upload так как у Server-side есть ограничение в размере запроса(4.5mb)
 import { handleUpload } from '@vercel/blob/client';
+import { NextResponse } from 'next/server';
 
 
-async function uploadVideo(req, res){
-    const body = await req.body;
+export async function POST(req){
+    const body = await req.json();
     console.log(body)
  
  
@@ -114,18 +115,6 @@ async function uploadVideo(req, res){
     });
  
 
-    return res.status(200).json(jsonResponse);
+    return NextResponse.json(jsonResponse);
   
-}
-
-
-export default async function handler(req, res){
-    const method = req.method;
-
-    if(method === "POST"){
-        return uploadVideo(req, res);
-    }
-
-    return res.status(405).json({error: `Method ${method} is not alllowed`});
-
 }
