@@ -1,4 +1,4 @@
-import prisma from '../../lib/prisma';
+import prisma from "../../lib/prisma";
 
 export default async function handler(req, res) {
     const method = req.method;
@@ -29,7 +29,7 @@ export default async function handler(req, res) {
         }
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        res.status(500).json({ error: "Internal Server Error" });
     } finally {
         // Завершаем ответ после завершения выполнения кода
         res.end();

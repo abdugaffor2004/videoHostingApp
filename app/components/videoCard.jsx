@@ -15,7 +15,7 @@ function VideoCard({filePath, id}){
             </div>
             
         </div>
-    )
-} 
+    );
+}
 
-export default VideoCard
+export default VideoCard;

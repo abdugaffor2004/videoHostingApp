@@ -105,15 +105,8 @@ async function uploadVideo(req, res){
       },
 
       onUploadCompleted: async ({ blob, tokenPayload }) => {
-        // Get notified of client upload completion
-        // ⚠️ This will not work on `localhost` websites,
-        // Use ngrok or similar to get the full upload flow
- 
         try {
-        // console.log('blob upload completed', blob, tokenPayload);
-          // Run any logic after the file upload completed
-          // const { userId } = JSON.parse(tokenPayload);
-          // await db.update({ avatar: blob.url, userId });
+          console.log('blob upload completed', blob, tokenPayload);
         } catch (error) {
           throw new Error('Could not update user');
         }
@@ -127,13 +120,12 @@ async function uploadVideo(req, res){
 
 
 export default async function handler(req, res){
-    const method = req.method
-
+    const method = req.method;
 
     if(method === "POST"){
         return uploadVideo(req, res);
     }
 
-    return res.status(405).json({error: `Method ${method} is not alllowed`})
+    return res.status(405).json({error: `Method ${method} is not alllowed`});
 
 }
